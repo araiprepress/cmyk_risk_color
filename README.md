@@ -31,4 +31,3 @@
 - CSS3
 - JavaScript (Vanilla)
 - Canvas API
-
