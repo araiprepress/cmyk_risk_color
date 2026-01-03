@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画像のリスクカラーを警告します。</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        画像のリスクカラーを警告します。
+    </header>
+    
+    <main class="content">
+        検証する画像
+        <div class="drop-zone" id="dropZone">
+            <p class="drop-message">画像をここにドラッグ&ドロップしてください</p>
+            <img id="previewImage" alt="プレビュー画像">
+        </div>
+    </main>
+    
+    <footer>
+        画像リスクカラー検出結果
+    </footer>
+    
+    <script src="dd_img.js"></script>
+    <script src="risk_color_detector.js"></script>
+</body>
+</html>
+
