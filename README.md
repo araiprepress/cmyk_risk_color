@@ -5,12 +5,12 @@
 ## 機能
 
 - ドラッグ&ドロップで画像を読み込み
-  !(img/sample_original_.png)
+  ![サンプル画像](https://github.com/araiprepress/cmyk_risk_color/blob/main/img/sample_original_.png)
 - リスクカラーの自動検出
 - リスクカラーを赤で表示した警告画像の生成
-  !(img/warning_.png)
+  ![リスクカラー傾向](https://github.com/araiprepress/cmyk_risk_color/blob/main/img/warning_.png)
 - リスクカラーを安全な色に変換した画像の生成
-  !(img/converted_.png)
+  ![変換画像](https://github.com/araiprepress/cmyk_risk_color/blob/main/img/converted_.png)
 - 画像のダウンロード機能
 
 ## 使い方
