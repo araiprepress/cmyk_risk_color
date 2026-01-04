@@ -57,49 +57,6 @@ async function loadRiskyColors() {
     }
 }
 
-// ファイルを保存ダイアログで保存する関数
-async function saveFileWithDialog(blob, defaultFileName) {
-    try {
-        // File System Access APIが利用可能かチェック
-        if ('showSaveFilePicker' in window) {
-            const fileHandle = await window.showSaveFilePicker({
-                suggestedName: defaultFileName,
-                types: [{
-                    description: 'PNG画像',
-                    accept: {
-                        'image/png': ['.png']
-                    }
-                }]
-            });
-            
-            const writable = await fileHandle.createWritable();
-            await writable.write(blob);
-            await writable.close();
-            return true;
-        } else {
-            // フォールバック: 従来のダウンロード方法
-            const link = document.createElement('a');
-            link.download = defaultFileName;
-            link.href = URL.createObjectURL(blob);
-            link.click();
-            URL.revokeObjectURL(link.href);
-            return false;
-        }
-    } catch (error) {
-        // ユーザーがキャンセルした場合など
-        if (error.name !== 'AbortError') {
-            console.error('ファイル保存エラー:', error);
-            // エラー時はフォールバック
-            const link = document.createElement('a');
-            link.download = defaultFileName;
-            link.href = URL.createObjectURL(blob);
-            link.click();
-            URL.revokeObjectURL(link.href);
-        }
-        return false;
-    }
-}
-
 // 色の距離を計算（RGB空間でのユークリッド距離）
 function colorDistance(rgb1, rgb2) {
     const dr = rgb1.r - rgb2.r;
@@ -384,38 +341,9 @@ function performRiskAnalysis(imageElement) {
                 dropZone.appendChild(warning);
                 
                 // ダウンロードボタンを追加
-                const downloadButton = document.createElement('button');
-                downloadButton.textContent = 'リスクカラー警告画像をダウンロード';
-                downloadButton.style.cssText = `
-                    margin-top: 15px;
-                    margin-bottom: 10px;
-                    padding: 10px 20px;
-                    background-color: #C62828;
-                    color: white;
-                    border: none;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    font-size: 14px;
-                    font-weight: bold;
-                    display: block;
-                    margin-left: auto;
-                    margin-right: auto;
-                `;
-                downloadButton.addEventListener('mouseenter', function() {
-                    this.style.backgroundColor = '#A02020';
-                });
-                downloadButton.addEventListener('mouseleave', function() {
-                    this.style.backgroundColor = '#C62828';
-                });
-                downloadButton.addEventListener('click', async function() {
-                    // canvasをBlobに変換
-                    result.canvas.toBlob(async function(blob) {
-                        if (blob) {
-                            await saveFileWithDialog(blob, 'risk_color_warning.png');
-                        }
-                    }, 'image/png');
-                });
-                warning.appendChild(downloadButton);
+                if (typeof createRiskWarningDownloadButton === 'function') {
+                    createRiskWarningDownloadButton(result.canvas, warning);
+                }
                 
                 // リスクカラーを赤で表示した画像を追加
                 const riskImage = document.createElement('img');
@@ -450,36 +378,9 @@ function performRiskAnalysis(imageElement) {
                         dropZone.appendChild(saferLabel);
                         
                         // ダウンロードボタンを追加
-                        const saferDownloadButton = document.createElement('button');
-                        saferDownloadButton.className = 'safer-conversion-element';
-                        saferDownloadButton.textContent = '変換後の画像をダウンロード';
-                        saferDownloadButton.style.cssText = `
-                            margin-top: 10px;
-                            margin-bottom: 10px;
-                            padding: 10px 20px;
-                            background-color: #2E7D32;
-                            color: white;
-                            border: none;
-                            border-radius: 5px;
-                            cursor: pointer;
-                            font-size: 14px;
-                            font-weight: bold;
-                        `;
-                        saferDownloadButton.addEventListener('mouseenter', function() {
-                            this.style.backgroundColor = '#1B5E20';
-                        });
-                        saferDownloadButton.addEventListener('mouseleave', function() {
-                            this.style.backgroundColor = '#2E7D32';
-                        });
-                        saferDownloadButton.addEventListener('click', async function() {
-                            // canvasをBlobに変換
-                            saferCanvas.toBlob(async function(blob) {
-                                if (blob) {
-                                    await saveFileWithDialog(blob, 'risk_color_converted.png');
-                                }
-                            }, 'image/png');
-                        });
-                        dropZone.appendChild(saferDownloadButton);
+                        if (typeof createConvertedImageDownloadButton === 'function') {
+                            createConvertedImageDownloadButton(saferCanvas, dropZone);
+                        }
                         
                         // 変換した画像を追加
                         const saferImage = document.createElement('img');
