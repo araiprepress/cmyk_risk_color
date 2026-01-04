@@ -12,14 +12,18 @@ body {
 }
 
 header {
-    border: 1px solid black;
+    /* border-bottom: 1px solid black; */
     padding: 20px;
     text-align: center;
-    background-color: #f0f0f0;
+    background-color: #f4f4f4;
+    border-bottom-style:solid;
+	border-bottom-width: 2px;
+	border-image-source: linear-gradient(90deg, blue, orange, magenta, green);
+    border-image-slice: 1;
 }
 
 .content {
-    border: 1px solid black;
+    border: none;
     padding: 20px;
     flex: 1;
     display: flex;
@@ -28,10 +32,17 @@ header {
 }
 
 footer {
-    border: 1px solid black;
+    border-top: 1px solid black;
     padding: 20px;
     text-align: center;
     background-color: #f0f0f0;
+}
+
+footer .disclaimer {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 10px;
+    line-height: 1.5;
 }
 
 .drop-zone {

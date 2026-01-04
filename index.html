@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        画像のリスクカラーを警告します。
+        RGBモードなどの画像をCMYKで表示する場合の、リスクカラーを警告します。
     </header>
     
     <main class="content">
@@ -20,10 +20,12 @@
     </main>
     
     <footer>
+        <p class="disclaimer">* アップロードされた画像はサーバーに送信されません。<br>* これは診断ツールであり最終結果を保証するものではありません。最終判断はご自身でお願いします。</p>
         画像リスクカラー検出結果
     </footer>
     
     <script src="dd_img.js"></script>
+    <script src="dL_img.js"></script>
     <script src="risk_color_detector.js"></script>
 </body>
 </html>
