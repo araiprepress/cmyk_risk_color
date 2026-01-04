@@ -179,8 +179,8 @@ function detectAndMarkRiskyColors(imageElement) {
         canvas.width = imageElement.naturalWidth || imageElement.width;
         canvas.height = imageElement.naturalHeight || imageElement.height;
         
-        // 元の画像を描画
-        ctx.drawImage(imageElement, 0, 0);
+        // 元の画像を描画（元画像の解像度を維持するため、幅と高さを明示的に指定）
+        ctx.drawImage(imageElement, 0, 0, canvas.width, canvas.height);
         
         // ピクセルデータを取得
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -230,8 +230,8 @@ function convertRiskyColorsToSafer(imageElement) {
         canvas.width = imageElement.naturalWidth || imageElement.width;
         canvas.height = imageElement.naturalHeight || imageElement.height;
         
-        // 元の画像を描画
-        ctx.drawImage(imageElement, 0, 0);
+        // 元の画像を描画（元画像の解像度を維持するため、幅と高さを明示的に指定）
+        ctx.drawImage(imageElement, 0, 0, canvas.width, canvas.height);
         
         // ピクセルデータを取得
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
